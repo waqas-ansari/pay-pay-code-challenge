@@ -1,14 +1,61 @@
 package co.waqas.paypaycodingchallenge.ui.main.interactor
 
-import co.waqas.paypaycodingchallenge.data.database.repository.currencies.Currency
-import co.waqas.paypaycodingchallenge.data.database.repository.currencies.CurrencyRepo
+import android.content.Context
+import co.waqas.paypaycodingchallenge.data.database.repository.currencies.list.CurrencyList
+import co.waqas.paypaycodingchallenge.data.database.repository.currencies.list.CurrencyListRepo
+import co.waqas.paypaycodingchallenge.data.database.repository.currencies.rates.CurrencyRates
+import co.waqas.paypaycodingchallenge.data.database.repository.currencies.rates.CurrencyRatesRepo
+import co.waqas.paypaycodingchallenge.data.network.ApiHelper
+import co.waqas.paypaycodingchallenge.ui.base.interactor.BaseInteractor
 import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
 
-class MainInteractor @Inject internal constructor(private val currencyRepo: CurrencyRepo) : IMainInteractor {
+class MainInteractor @Inject internal constructor(private val currencyListRepo: CurrencyListRepo,
+                                                  private val currencyRatesRepo: CurrencyRatesRepo,
+                                                  apiHelper: ApiHelper) : BaseInteractor(apiHelper), IMainInteractor {
+    override fun insertCurrencyRate(currencyRates: CurrencyRates) {
+        Thread(Runnable {
+            currencyRatesRepo.insertCurrencies(currencyRates)
+        }).start()
+    }
 
-    override fun isCurrencyRepoEmpty(): Observable<Boolean> = currencyRepo.isRepoEmpty()
+    override fun insertCurrencyList(currencyList: CurrencyList) {
+        Thread(Runnable {
+            currencyListRepo.insertCurrencies(currencyList)
+        }).start()
+    }
 
-    override fun loadAllCurrencies(): Single<MutableList<List<Currency>>>? = currencyRepo.loadCurrencies().toList()
+    /**
+     * this is for demonstration purposes
+     */
+    override fun fetchCurrencyList(context: Context): Observable<CurrencyList> {
+        return Observable.fromCallable {
+            apiHelper.getCurrencyList(context)
+        }
+    }
+
+
+    /**
+     * this is for demonstration purposes
+     */
+    override fun fetchCurrencyRatesList(context: Context): Observable<CurrencyRates> {
+        return Observable.fromCallable {
+            apiHelper.getCurrencyRates(context)
+        }
+    }
+
+
+    override fun isCurrencyListRepoEmpty(): Boolean = currencyListRepo.isRepoEmpty()
+
+    override fun loadCurrencyList(): CurrencyList {
+        return currencyListRepo.loadCurrencies()[0]
+    }
+
+    override fun isCurrencyRatesRepoEmpty(): Boolean = currencyRatesRepo.isRepoEmpty()
+
+    override fun loadCurrencyRates(): CurrencyRates {
+        return currencyRatesRepo.loadCurrencies()[0]
+    }
+
 }

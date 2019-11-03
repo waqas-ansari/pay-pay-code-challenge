@@ -37,6 +37,7 @@ ext {
     buildToolsVersion = '26.0.2'
 
     // App dependencies
+    supportLibraryVersion = '28.0.0'
     kotlinVersion = kotlin_version
     androidxVersion = '1.1.0'
     gsonVersion = '2.8.6'
@@ -44,7 +45,7 @@ ext {
     okhttpVersion = '2.7.5'
     glideVersion = '3.7.0'
     rx2FastAndroidNetworking = '1.0.1'
-    dagger2Version = '2.11'
+    dagger2Version = '2.15'
     rxjava2Version = '2.0.6'
     rxandroidVersion = '2.0.1'
     butterKnifeVersion = '8.8.1'

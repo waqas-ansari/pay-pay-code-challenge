@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="general_padding">10dp</dimen>
+    <dimen name="large_padding">20dp</dimen>
+    <dimen name="min_spinner_height">48dp</dimen>
+</resources>

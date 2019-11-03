@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PayPayCodingChallenge</string>
+    <string name="hint_text_select_currency">Select Currency</string>
+    <string name="hint_text_enter_amount">Enter Amount</string>
+    <string name="hint_amount_in_decimal">#.##</string>
+    <string name="adapter_empty_text_no_exchange_rates_found">No exchange rates found</string>
 </resources>

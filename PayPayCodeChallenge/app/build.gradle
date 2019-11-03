@@ -15,6 +15,12 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
     buildTypes {
         release {
@@ -29,6 +35,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     implementation "androidx.appcompat:appcompat:$androidxVersion"
     implementation "androidx.core:core-ktx:$androidxVersion"
+    implementation "com.android.support:recyclerview-v7:$supportLibraryVersion"
 
     //network
     implementation "com.google.code.gson:gson:$gsonVersion"

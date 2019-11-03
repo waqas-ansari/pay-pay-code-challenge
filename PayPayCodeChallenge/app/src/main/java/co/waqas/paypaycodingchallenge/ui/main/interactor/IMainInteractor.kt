@@ -1,13 +1,27 @@
 package co.waqas.paypaycodingchallenge.ui.main.interactor
 
-import co.waqas.paypaycodingchallenge.data.database.repository.currencies.Currency
+import android.content.Context
+import co.waqas.paypaycodingchallenge.data.database.repository.currencies.list.CurrencyList
+import co.waqas.paypaycodingchallenge.data.database.repository.currencies.rates.CurrencyRates
 import co.waqas.paypaycodingchallenge.ui.base.interactor.IBaseInteractor
 import io.reactivex.Observable
 import io.reactivex.Single
 
 interface IMainInteractor: IBaseInteractor {
 
-    fun isCurrencyRepoEmpty(): Observable<Boolean>
+    fun isCurrencyListRepoEmpty(): Boolean
 
-    fun loadAllCurrencies() : Single<MutableList<List<Currency>>>?
+    fun loadCurrencyList(): CurrencyList
+
+    fun isCurrencyRatesRepoEmpty(): Boolean
+
+    fun loadCurrencyRates(): CurrencyRates
+
+    fun fetchCurrencyList(context: Context): Observable<CurrencyList>
+
+    fun fetchCurrencyRatesList(context: Context): Observable<CurrencyRates>
+
+    fun insertCurrencyRate(currencyRates: CurrencyRates)
+
+    fun insertCurrencyList(currencyList: CurrencyList)
 }
