@@ -4,6 +4,8 @@ import io.reactivex.Observable
 
 interface ICurrencyListRepo {
 
+    fun isRepoEmpty2(): Observable<Boolean>
+
     fun isRepoEmpty(): Boolean
 
     fun loadCurrencies(): List<CurrencyList>

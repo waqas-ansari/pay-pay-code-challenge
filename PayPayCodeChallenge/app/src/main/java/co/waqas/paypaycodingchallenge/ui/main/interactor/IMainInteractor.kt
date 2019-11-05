@@ -11,6 +11,8 @@ interface IMainInteractor: IBaseInteractor {
 
     fun isCurrencyListRepoEmpty(): Boolean
 
+    fun isCurrencyListRepoEmpty2(): Observable<Boolean>
+
     fun loadCurrencyList(): CurrencyList
 
     fun isCurrencyRatesRepoEmpty(): Boolean
