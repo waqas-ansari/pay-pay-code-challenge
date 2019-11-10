@@ -1,7 +1,7 @@
 package co.waqas.paypaycodingchallenge.util
 
 object AppConstants {
-
+    const val DEVICE_CACHE_EXPIRY = 30*60000;
     const val RAW_FOLDER = "raw"
     const val FILE_EXCHANGE_RATES = "sample_currency_rates_response"
     const val FILE_CURRENCY_LIST = "sample_currency_list_response"

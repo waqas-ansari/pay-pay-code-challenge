@@ -8,6 +8,8 @@ interface ICurrencyRatesRepo {
 
     fun loadCurrencies(): List<CurrencyRates>
 
+    fun loadCurrencies2(): Observable<List<CurrencyRates>>
+
     fun insertCurrencies(currencyRates: CurrencyRates) : Observable<Boolean>
 
 }

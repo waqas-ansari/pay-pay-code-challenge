@@ -14,6 +14,17 @@ import javax.inject.Inject
 class MainInteractor @Inject internal constructor(private val currencyListRepo: CurrencyListRepo,
                                                   private val currencyRatesRepo: CurrencyRatesRepo,
                                                   apiHelper: ApiHelper) : BaseInteractor(apiHelper), IMainInteractor {
+    override fun loadCurrencyList2(): Observable<List<CurrencyList>> {
+        return currencyListRepo.loadCurrencies2()
+    }
+
+    override fun insertCurrencyRate2(currencyRates: CurrencyRates): Observable<Boolean> {
+        return currencyRatesRepo.insertCurrencies(currencyRates)
+    }
+
+    override fun loadCurrencyRates2(): Observable<List<CurrencyRates>> {
+        return currencyRatesRepo.loadCurrencies2()
+    }
 
 
     override fun isCurrencyListRepoEmpty2(): Observable<Boolean> {

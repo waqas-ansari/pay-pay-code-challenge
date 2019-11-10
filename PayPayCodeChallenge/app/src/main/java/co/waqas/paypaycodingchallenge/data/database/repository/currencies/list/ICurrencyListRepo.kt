@@ -10,5 +10,7 @@ interface ICurrencyListRepo {
 
     fun loadCurrencies(): List<CurrencyList>
 
+    fun loadCurrencies2(): Observable<List<CurrencyList>>
+
     fun insertCurrencies(currencies: CurrencyList) : Observable<Boolean>
 }

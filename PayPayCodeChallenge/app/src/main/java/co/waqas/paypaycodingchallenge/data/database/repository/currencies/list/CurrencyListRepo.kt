@@ -1,5 +1,6 @@
 package co.waqas.paypaycodingchallenge.data.database.repository.currencies.list
 
+import co.waqas.paypaycodingchallenge.data.database.repository.currencies.rates.CurrencyRates
 import io.reactivex.Observable
 import javax.inject.Inject
 
@@ -14,6 +15,12 @@ class CurrencyListRepo @Inject internal constructor(private val currencyDao: Cur
     override fun isRepoEmpty(): Boolean = currencyDao.loadAll().isEmpty()
 
     override fun loadCurrencies(): List<CurrencyList> = currencyDao.loadAll()
+
+    override fun loadCurrencies2(): Observable<List<CurrencyList>> {
+        return Observable.fromCallable {
+            currencyDao.loadAll()
+        }
+    }
 
 
     override fun insertCurrencies(currencies: CurrencyList): Observable<Boolean> {

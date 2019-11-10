@@ -5,6 +5,12 @@ import javax.inject.Inject
 
 class CurrencyRatesRepo @Inject internal constructor(private val currencyDao: CurrencyRatesDao) : ICurrencyRatesRepo {
 
+    override fun loadCurrencies2(): Observable<List<CurrencyRates>> {
+        return Observable.fromCallable {
+            currencyDao.loadAll()
+        }
+    }
+
     override fun isRepoEmpty(): Boolean = currencyDao.loadAll().isEmpty()
 
     override fun loadCurrencies(): List<CurrencyRates> {

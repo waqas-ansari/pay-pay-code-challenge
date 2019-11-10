@@ -15,15 +15,21 @@ interface IMainInteractor: IBaseInteractor {
 
     fun loadCurrencyList(): CurrencyList
 
+    fun loadCurrencyList2(): Observable<List<CurrencyList>>
+
     fun isCurrencyRatesRepoEmpty(): Boolean
 
     fun loadCurrencyRates(): CurrencyRates
+
+    fun loadCurrencyRates2(): Observable<List<CurrencyRates>>
 
     fun fetchCurrencyList(context: Context): Observable<CurrencyList>
 
     fun fetchCurrencyRatesList(context: Context): Observable<CurrencyRates>
 
     fun insertCurrencyRate(currencyRates: CurrencyRates)
+
+    fun insertCurrencyRate2(currencyRates: CurrencyRates): Observable<Boolean>
 
     fun insertCurrencyList(currencyList: CurrencyList)
 }

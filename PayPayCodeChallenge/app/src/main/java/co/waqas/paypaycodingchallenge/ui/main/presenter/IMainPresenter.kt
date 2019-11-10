@@ -10,10 +10,6 @@ import co.waqas.paypaycodingchallenge.ui.main.view.IMainView
 
 interface IMainPresenter<V : IMainView, I : IMainInteractor> : IBasePresenter<V, I> {
 
-    fun convertCurrency()
-
-    fun fetchCurrency()
-
     fun convertToUnitCurrencyRate(fromCurrency: String)
 
     fun loadCurrencyList(context: Context)
