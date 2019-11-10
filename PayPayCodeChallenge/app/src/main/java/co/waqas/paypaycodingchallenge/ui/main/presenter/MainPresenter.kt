@@ -15,6 +15,10 @@ import javax.inject.Inject
 
 class MainPresenter<V : IMainView, I : IMainInteractor> @Inject internal constructor(interactor: I, schedulerProvider: SchedulerProvider, disposable: CompositeDisposable) : BasePresenter<V, I>(interactor = interactor, schedulerProvider = schedulerProvider, compositeDisposable = disposable), IMainPresenter<V, I> {
 
+    /**
+     * Purpose of this function is to check if currency list repo and currency rates repo
+     * is empty and based on that, either fetch data from the server or get from the DB
+     */
     override fun loadCurrencyList(context: Context) {
         interactor?.let {
             compositeDisposable.add(
@@ -27,6 +31,10 @@ class MainPresenter<V : IMainView, I : IMainInteractor> @Inject internal constru
         }
     }
 
+
+    /**
+     * Check is the currency rate repo is empty.
+     */
     private fun checkIfCurrencyRateIsEmpty(isCurrencyListRepoEmpty: Boolean, context: Context) {
         interactor?.let {
             compositeDisposable.add(
@@ -40,6 +48,11 @@ class MainPresenter<V : IMainView, I : IMainInteractor> @Inject internal constru
     }
 
 
+    /**
+     * Base on the result of loadCurrencyRateList and checkIfCurrencyRateIsEmpty, it checks if
+     * 30 minutes has been passed or either of the repo's are empty, it fetches data from DB
+     * or get it from server (json file in our case)
+     */
     private fun checkIfForceFetchAndLoadCurrencyList(isRepoEmpty: Boolean, currencyRatesList: List<CurrencyRates>, context: Context) {
         if (isRepoEmpty || forceFetchCurrencyList(currencyRatesList)) {
             interactor?.let { it ->
@@ -60,6 +73,10 @@ class MainPresenter<V : IMainView, I : IMainInteractor> @Inject internal constru
     }
 
 
+    /**
+     * This is responsible for checking if repo is empty or 30 mins has been passed since the last fetch and
+     * then either gets it from DB or fetch from server
+     */
     override fun loadCurrencyRateList(context: Context) {
         Thread(Runnable {
             if (interactor?.isCurrencyRatesRepoEmpty()!! || forceFetchCurrencyList(ArrayList())) {
@@ -81,6 +98,9 @@ class MainPresenter<V : IMainView, I : IMainInteractor> @Inject internal constru
         }).start()
     }
 
+    /**
+     * It either fetches data from DB or Server and sends call to update UI
+     */
     private fun loadCurrencyList(isCurrencyListRepoEmpty: Boolean, context: Context) {
         if (isCurrencyListRepoEmpty) {
             interactor?.let {
@@ -100,6 +120,10 @@ class MainPresenter<V : IMainView, I : IMainInteractor> @Inject internal constru
         }
     }
 
+
+    /**
+     * Loads currency list from DB and sends UI update request to Voew
+     */
     private fun loadCurrencyListFromDb() {
         interactor?.let {
             compositeDisposable.add(
@@ -112,6 +136,10 @@ class MainPresenter<V : IMainView, I : IMainInteractor> @Inject internal constru
         }
     }
 
+
+    /**
+     * It checks if 30 mins has been passed since the last fetch
+     */
     private fun forceFetchCurrencyList(currencyRatesList: List<CurrencyRates>): Boolean {
         if (currencyRatesList.isEmpty()) return false
         val currencyRates = currencyRatesList[0]
@@ -124,6 +152,10 @@ class MainPresenter<V : IMainView, I : IMainInteractor> @Inject internal constru
         return false
     }
 
+
+    /**
+     * It inserts the currency rate list data into DB
+     */
     private fun updateCurrencyRateList(currencyRates: CurrencyRates) {
         Thread(Runnable {
             interactor?.let {
@@ -138,6 +170,11 @@ class MainPresenter<V : IMainView, I : IMainInteractor> @Inject internal constru
         }).start()
     }
 
+
+    /**
+     * This function is responsible for converting unit currency rate to
+     * all available currencies in DB
+     */
     override fun convertToUnitCurrencyRate(fromCurrency: String) {
         Thread(Runnable {
             val toCurrencyList: ArrayList<String> = ArrayList()
